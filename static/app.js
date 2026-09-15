@@ -236,7 +236,7 @@ function renderInvoiceList(invoices) {
             </thead>
             <tbody>
                 ${invoices.map(invoice => `
-                    <tr>
+                    <tr data-id="${invoice.id}">
                         <td><strong>${invoice.invoice_number}</strong></td>
                         <td>${escapeHtml(invoice.client_name)}</td>
                         <td>${formatCurrency(invoice.total)}</td>
