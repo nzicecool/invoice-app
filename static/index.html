@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Invoice App</h1>
+            <button id="newInvoiceBtn">+ New Invoice</button>
+        </header>
+
+        <main id="mainContent">
+            <div id="invoiceList">
+                <h2>Invoices</h2>
+                <div class="filter-bar">
+                    <select id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="draft">Draft</option>
+                        <option value="sent">Sent</option>
+                        <option value="paid">Paid</option>
+                        <option value="overdue">Overdue</option>
+                    </select>
+                </div>
+                <div id="invoicesTable"></div>
+            </div>
+
+            <div id="invoiceForm" style="display: none;">
+                <h2 id="formTitle">New Invoice</h2>
+                <form id="invoiceFormElement">
+                    <input type="hidden" id="invoiceId">
+                    <input type="hidden" id="invoiceNumber">
+
+                    <div class="section">
+                        <h3>Client Details</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="clientName">Client Name *</label>
+                                <input type="text" id="clientName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="clientEmail">Email</label>
+                                <input type="email" id="clientEmail">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Dates</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="issueDate">Issue Date *</label>
+                                <input type="date" id="issueDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dueDate">Due Date *</label>
+                                <input type="date" id="dueDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="currency">Currency</label>
+                                <select id="currency">
+                                    <option value="AUD" selected>AUD</option>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="GBP">GBP</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Items</h3>
+                        <div id="itemsContainer"></div>
+                        <button type="button" id="addItemBtn">+ Add Item</button>
+                    </div>
+
+                    <div class="section">
+                        <h3>Notes</h3>
+                        <textarea id="notes" rows="3"></textarea>
+                    </div>
+
+                    <div class="section totals">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotalDisplay">$0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <label>
+                                <input type="checkbox" id="gstToggle">
+                                GST (<span id="gstRateDisplay">10</span>%)
+                            </label>
+                            <span id="gstDisplay">$0.00</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span>Total:</span>
+                            <span id="totalDisplay">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="saveBtn">Save Invoice</button>
+                        <button type="button" id="cancelBtn">Cancel</button>
+                        <button type="button" id="printBtn" style="display: none;">Print</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="invoiceView" style="display: none;">
+                <div class="invoice-actions">
+                    <button id="backToList">← Back</button>
+                </div>
+                <div id="invoicePrintArea">
+                    <div class="invoice-header">
+                        <h1>INVOICE</h1>
+                        <div class="invoice-meta">
+                            <p><strong>Invoice Number:</strong> <span id="viewInvoiceNumber"></span></p>
+                            <p><strong>Issue Date:</strong> <span id="viewIssueDate"></span></p>
+                            <p><strong>Due Date:</strong> <span id="viewDueDate"></span></p>
+                        </div>
+                    </div>
+                    <div class="invoice-client">
+                        <h3>Bill To:</h3>
+                        <p><strong id="viewClientName"></strong></p>
+                        <p id="viewClientEmail"></p>
+                    </div>
+                    <table class="invoice-items">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Qty</th>
+                                <th>Unit Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="viewItemsBody"></tbody>
+                    </table>
+                    <div class="invoice-totals">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="viewSubtotal"></span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax:</span>
+                            <span id="viewTax"></span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span>Total:</span>
+                            <span id="viewTotal"></span>
+                        </div>
+                    </div>
+                    <div class="invoice-notes" id="viewNotes" style="display: none;"></div>
+                    <div class="invoice-status">
+                        <span id="viewStatus"></span>
+                    </div>
+                </div>
+                <div class="invoice-view-actions">
+                    <button id="markSentBtn">Mark as Sent</button>
+                    <button id="markPaidBtn">Mark as Paid</button>
+                    <button id="editInvoiceBtn">Edit Invoice</button>
+                    <button id="deleteInvoiceBtn">Delete</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
